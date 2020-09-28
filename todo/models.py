@@ -1,6 +1,14 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Todo(models.Model):
-    titke = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
     memo = models.TextField(blank=True)
-    done = models.DateField(blank=False, null=True)
+    created = models.DateTimeField(auto_now_add = True)
+    datecompleted = models.DateTimeField(null=True, blank = True)
+    important = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+# Returns the name of the Todo object in admin panel for easier use
+    def __str__(self):
+        return self.title
